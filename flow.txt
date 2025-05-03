@@ -1,0 +1,8 @@
+﻿
+
+=> First Call Create Organization => Get Organization Id   => OrganizationCreateOrUpdate(OrganizationCU organizationCU)
+=> Then Call Automatic Generate Roles =>     GenerateRolesOrg(int orgId)
+=> Then Call Get Admin ID of that organization Roles = > GetAdminRoleIdOrg(int OrgId)
+=> Then Call User Registration by passing data most role_id and org_id get from previous funtions  => RegisterUser(UserRegistration userRegistration) 
+
+
