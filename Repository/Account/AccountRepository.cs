@@ -3,6 +3,7 @@ using ENT.Models;
 using ENT.Repository.Organization;
 using Npgsql;
 using Serilog;
+using System.Security.Cryptography;
 namespace ENT.Repository.Account
 {
     public class AccountRepository:IAccountRepository
@@ -107,6 +108,93 @@ namespace ENT.Repository.Account
                 return new Res<object>(500, $"Error: {ex.Message}");
             }
         }
+
+
+        // Update User => 
+        public async Task<Res<object>> UpdateUserRepo(UserRegistration userRegistration)
+        {
+            try
+            {
+                if (userRegistration == null)
+                {
+                    return new Res<object>(500, "No Data Found To Insert");
+                }
+
+                await using var con = new NpgsqlConnection(_connectionString);
+
+                await con.OpenAsync();
+
+                var query = @"SELECT public.user_update(
+	                            @userid,
+	                            @fname,
+	                            @lname,
+	                            @mail,
+	                            @password_hash,
+	                            @phone,
+	                            @org_id,
+	                            @role_id,
+	                            @profile_image,
+	                            @is_active,
+	                            @is_verified,
+	                            @created_by
+                            )
+                             ";
+
+                await using var command = new NpgsqlCommand(query, con);
+
+                command.Parameters.AddWithValue("@userid",userRegistration.Id);
+                command.Parameters.AddWithValue("@fname",userRegistration.Fname);
+                command.Parameters.AddWithValue("@lname",userRegistration.Lname);
+                command.Parameters.AddWithValue("@mail",userRegistration.Email);
+                command.Parameters.AddWithValue("@password_hash",userRegistration.Password);
+                command.Parameters.AddWithValue("@phone",userRegistration.PhoneNumber);
+                command.Parameters.AddWithValue("@org_id",userRegistration.OrgId);
+                command.Parameters.AddWithValue("@role_id",userRegistration.RoleId);
+                command.Parameters.AddWithValue("@profile_image",userRegistration.ProfileImageUrl);
+                command.Parameters.AddWithValue("@is_active",userRegistration.IsActive);
+                command.Parameters.AddWithValue("@is_verified",userRegistration.IsVerified);
+                command.Parameters.AddWithValue("@created_by",userRegistration.CreatedBy);
+
+                await using var reader = await command.ExecuteReaderAsync();
+
+                if (await reader.ReadAsync())
+                {
+                    var resultRecord = reader.GetFieldValue<object[]>(0); // Entire record comes as a single object[]
+                    var statusCode = (int)resultRecord[0];
+                    var message = (string)resultRecord[1];
+                    var userId = resultRecord[2] == DBNull.Value || resultRecord[2] == null ? (int?)null : (int)resultRecord[2];
+
+
+                    var result = new
+                    {
+                        StatusCode = statusCode,
+                        Message = message,
+                        UserId = userId
+                    };
+
+                    switch (statusCode)
+                    {
+                        case 1:
+                            return new Res<object>(200, message, result);
+                        default:
+                            return new Res<object>(400, message, result);
+                    }
+                }
+
+                return new Res<object>(404, "No response from DB function");
+
+            }
+            catch(Exception ex) 
+            {
+                Log.Error(ex, "AccountRepository Error =>", userRegistration);
+                return new Res<object>(500, $"Error: {ex.Message}");
+            }
+        }
+
+
+
+
+
 
 
 

@@ -9,6 +9,6 @@ namespace ENT.Repository.Organization
 
         Task<Res<object>> GenerateRolesRepo(int orgId);
 
-        Task<int> GetAdminRoleId(int orgId)
+        Task<int> GetAdminRoleId(int orgId);
     }
 }

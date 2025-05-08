@@ -6,3 +6,12 @@
 => Then Call User Registration by passing data most role_id and org_id get from previous funtions  => RegisterUser(UserRegistration userRegistration) 
 
 
+-------------------
+
+=> First Create User Account => RegisterUser(UserRegistration userRegistration);
+=> First Call Create Organization => Get Organization Id   => OrganizationCreateOrUpdate(OrganizationCU organizationCU)
+=> Then Call Automatic Generate Roles =>   GenerateRolesOrg(int orgId)
+=> Update Org_id and role_id in User Table Get From Above two Steps 
+=> write funciton for update 
+
+

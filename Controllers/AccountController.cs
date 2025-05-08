@@ -31,6 +31,56 @@ namespace ENT.Controllers
         }
 
 
+        // Update User Function => 
+        [HttpPut("UpdateUser")]
+        public async Task<IActionResult> UpdateUser(UserRegistration userRegistration)
+        {
+            try
+            {
+                var response = await _accountRepository.UpdateUserRepo(userRegistration);
+
+                if (response.StatusCode == 200)
+                {
+                    return Ok(response);
+                }
+
+                return StatusCode(response.StatusCode, response);
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         
