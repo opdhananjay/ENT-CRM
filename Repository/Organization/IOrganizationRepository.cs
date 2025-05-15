@@ -12,3 +12,6 @@ namespace ENT.Repository.Organization
         Task<int> GetAdminRoleId(int orgId);
     }
 }
+
+
+

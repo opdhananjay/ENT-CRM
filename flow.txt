@@ -11,7 +11,7 @@
 => First Create User Account => RegisterUser(UserRegistration userRegistration);
 => First Call Create Organization => Get Organization Id   => OrganizationCreateOrUpdate(OrganizationCU organizationCU)
 => Then Call Automatic Generate Roles =>   GenerateRolesOrg(int orgId)
-=> Update Org_id and role_id in User Table Get From Above two Steps 
-=> write funciton for update 
+=> Update Org_id and role_id in User Table Get From Above two Steps Call this => UpdateUser(UserRegistration userRegistration)
+
 
 
