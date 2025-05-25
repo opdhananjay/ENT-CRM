@@ -57,7 +57,7 @@ namespace ENT.Services.JWT
             }
             catch(Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
     }

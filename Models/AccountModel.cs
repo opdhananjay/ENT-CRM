@@ -22,6 +22,11 @@
         public bool IsAuto { get; set; } = false;
     }
 
+    public class UserLogin
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
 
 
 

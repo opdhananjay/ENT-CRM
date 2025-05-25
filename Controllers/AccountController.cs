@@ -53,6 +53,27 @@ namespace ENT.Controllers
         }
 
 
+        // User Login =>
+        [HttpPost("UserLogin")]
+        public async Task<IActionResult> UserLogin(UserLogin userLogin)
+        {
+            try
+            {
+                var response = await _accountRepository.UserLoginRepo(userLogin);
+                
+                if(response.StatusCode == 200)
+                {
+                    return Ok(response);
+                }
+
+                return StatusCode(response.StatusCode,response);
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+        }
+
 
 
 

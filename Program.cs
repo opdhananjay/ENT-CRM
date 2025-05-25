@@ -3,6 +3,8 @@ using Serilog.Exceptions;
 using ENT.Midderlwares;
 using ENT.Repository.Account;
 using ENT.Repository.Organization;
+using ENT.Services.JWT;
+using ENT.Repository.RBAC;
 
 
 Log.Logger = new LoggerConfiguration()
@@ -27,6 +29,8 @@ Log.Logger = new LoggerConfiguration()
         
         builder.Services.AddScoped<IAccountRepository, AccountRepository>();
         builder.Services.AddScoped<IOrganizationRepository,OrganizationRepository>();
+        builder.Services.AddSingleton<ITokenService, TokenService>();
+        builder.Services.AddScoped<IRBACRepository, RBACRepository>();    
 
         #endregion Adding Service
 
